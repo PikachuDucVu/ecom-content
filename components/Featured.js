@@ -1,33 +1,34 @@
+/* eslint-disable @next/next/no-img-element */
 import Center from "@/components/Center";
 import styled from "styled-components";
 import Button from "@/components/Button";
 import ButtonLink from "@/components/ButtonLink";
 import CartIcon from "@/components/icons/CartIcon";
-import {useContext} from "react";
-import {CartContext} from "@/components/CartContext";
+import { useContext } from "react";
+import { CartContext } from "@/components/CartContext";
 
 const Bg = styled.div`
   background-color: #222;
-  color:#fff;
+  color: #fff;
   padding: 50px 0;
 `;
 const Title = styled.h1`
-  margin:0;
-  font-weight:normal;
-  font-size:1.5rem;
+  margin: 0;
+  font-weight: normal;
+  font-size: 1.5rem;
   @media screen and (min-width: 768px) {
-    font-size:3rem;
+    font-size: 3rem;
   }
 `;
 const Desc = styled.p`
-  color:#aaa;
-  font-size:.8rem;
+  color: #aaa;
+  font-size: 0.8rem;
 `;
 const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
-  img{
+  img {
     max-width: 100%;
     max-height: 200px;
     display: block;
@@ -41,7 +42,7 @@ const ColumnsWrapper = styled.div`
     div:nth-child(1) {
       order: 0;
     }
-    img{
+    img {
       max-width: 100%;
     }
   }
@@ -52,15 +53,24 @@ const Column = styled.div`
 `;
 const ButtonsWrapper = styled.div`
   display: flex;
-  gap:10px;
-  margin-top:25px;
+  gap: 10px;
+  margin-top: 25px;
 `;
 
-export default function Featured({product}) {
-  const {addProduct} = useContext(CartContext);
+function truncateString(str, length, ending = "...") {
+  if (str.length > length) {
+    return str.slice(0, length - ending.length) + ending;
+  }
+  return str;
+}
+
+export default function Featured({ product }) {
+  const { addProduct } = useContext(CartContext);
   function addFeaturedToCart() {
     addProduct(product._id);
   }
+
+  console.log(product);
   return (
     <Bg>
       <Center>
@@ -68,9 +78,15 @@ export default function Featured({product}) {
           <Column>
             <div>
               <Title>{product.title}</Title>
-              <Desc>{product.description}</Desc>
+              <Desc>{truncateString(product.description, 32, "...")}</Desc>
               <ButtonsWrapper>
-                <ButtonLink href={'/product/'+product._id} outline={1} white={1}>Read more</ButtonLink>
+                <ButtonLink
+                  href={"/product/" + product._id}
+                  outline={1}
+                  white={1}
+                >
+                  Read more
+                </ButtonLink>
                 <Button white onClick={addFeaturedToCart}>
                   <CartIcon />
                   Add to cart
@@ -79,11 +95,13 @@ export default function Featured({product}) {
             </div>
           </Column>
           <Column>
-            <img src="https://dawid-next-ecommerce.s3.amazonaws.com/1679151719649.png" alt=""/>
+            <img
+              src="https://ducvu-ecommerce.s3.ap-southeast-2.amazonaws.com/1714690174159.png"
+              alt=""
+            />
           </Column>
         </ColumnsWrapper>
       </Center>
-
     </Bg>
   );
 }
