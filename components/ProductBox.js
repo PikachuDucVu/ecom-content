@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import styled from "styled-components";
 import Button from "@/components/Button";
-import CartIcon from "@/components/icons/CartIcon";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "@/components/CartContext";
+import { fakeSales, randomInt, convertUSDtoVND } from "@/lib/utils";
 
 const ProductWrapper = styled.div`
   display: flex;
@@ -43,40 +44,16 @@ const ProductInfoBox = styled.div`
   gap: 10px;
 `;
 
-const PriceRow = styled.div`
-  display: block;
-  @media screen and (min-width: 768px) {
-    display: flex;
-    gap: 5px;
-  }
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 2px;
-`;
-
-const Price = styled.div`
-  font-size: 1rem;
-  font-weight: 400;
-  text-align: right;
-  @media screen and (min-width: 768px) {
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-align: left;
-  }
-`;
-
-function formatCash(str) {
-  return str
-    .split("")
-    .reverse()
-    .reduce((prev, next, index) => {
-      return (index % 3 ? next : next + ",") + prev;
-    });
-}
-
 export default function ProductBox({ _id, title, description, price, images }) {
   const { addProduct } = useContext(CartContext);
   const url = "/product/" + _id;
+
+  const [randomPercents, setRandomPercents] = useState(0);
+
+  useEffect(() => {
+    setRandomPercents(randomInt(5, 20));
+  }, []);
+
   return (
     <ProductWrapper>
       <WhiteBox href={url}>
@@ -86,11 +63,22 @@ export default function ProductBox({ _id, title, description, price, images }) {
       </WhiteBox>
       <Title href={url}>{title}</Title>
       <ProductInfoBox>
-        <PriceRow>
-          <Price>{formatCash(Number(price * 25000).toString())} VND</Price>
-        </PriceRow>
+        <div className="flex justify-between items-end text-lg">
+          <div className="text-gray-600">
+            <div className="font-bold">Giá gốc </div>
+            <div className="line-through">
+              {fakeSales(price, randomPercents)}₫
+            </div>
+          </div>
+          <div className="text-right">
+            <div className="text-red-500">Giảm {randomPercents}%</div>
+            <div className="font-bold text-green-600">
+              {convertUSDtoVND(price)}₫
+            </div>
+          </div>
+        </div>
         <Button block onClick={() => addProduct(_id)} primary outline>
-          Add to cart
+          Thêm vào giỏ hàng
         </Button>
       </ProductInfoBox>
     </ProductWrapper>

@@ -49,7 +49,7 @@ export default function ProductPage({ product }) {
               <div>
                 <Button primary onClick={() => addProduct(product._id)}>
                   <CartIcon />
-                  Add to cart
+                  Thêm vào giỏ hàng
                 </Button>
               </div>
             </PriceRow>

@@ -8,6 +8,7 @@ import { CartContext } from "@/components/CartContext";
 import axios from "axios";
 import Table from "@/components/Table";
 import Input from "@/components/Input";
+import { convertUSDtoVND } from "@/lib/utils";
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -23,6 +24,9 @@ const Box = styled.div`
   background-color: #fff;
   border-radius: 10px;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const ProductInfoCell = styled.td`
@@ -103,6 +107,11 @@ export default function CartPage() {
     removeProduct(id);
   }
   async function goToPayment() {
+    if (!name || !email || !city || !streetAddress || !country) {
+      alert("Vui lòng điền đầy đủ thông tin");
+      return;
+    }
+
     const response = await axios.post("/api/checkout", {
       name,
       email,
@@ -143,27 +152,30 @@ export default function CartPage() {
       <Center>
         <ColumnsWrapper>
           <Box>
-            <h2>Cart</h2>
-            {!cartProducts?.length && <div>Your cart is empty</div>}
+            <h2 className="py-2 font-bold text-xl">Giỏ hàng của bạn</h2>
+            {!cartProducts?.length && (
+              <div>Hiện chưa có sản phẩm nào, hãy đi thêm sản phẩm nhé</div>
+            )}
             {products?.length > 0 && (
               <Table>
-                <thead>
-                  <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
+                <thead className="">
+                  <tr className="">
+                    <th style={{ textAlign: "left" }}>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Tổng giá trị</th>
                   </tr>
                 </thead>
                 <tbody>
                   {products.map((product) => (
-                    <tr key={product._id}>
+                    <tr key={product._id} className="">
                       <ProductInfoCell>
                         <ProductImageBox>
-                          <img src={product.images[0]} alt="" />
+                          <img src={product?.images[0]} alt="" />
                         </ProductImageBox>
-                        {product.title}
+                        <br />
+                        <div className="font-bold">{product.title}</div>
                       </ProductInfoCell>
-                      <td>
+                      <td className="flex min-w-52 justify-center items-center text-xl pt-20">
                         <Button onClick={() => lessOfThisProduct(product._id)}>
                           -
                         </Button>
@@ -177,17 +189,19 @@ export default function CartPage() {
                           +
                         </Button>
                       </td>
-                      <td>
-                        $
-                        {cartProducts.filter((id) => id === product._id)
-                          .length * product.price}
+                      <td className="min-w-36 font-bold">
+                        {convertUSDtoVND(
+                          cartProducts.filter((id) => id === product._id)
+                            .length * product.price
+                        )}{" "}
+                        VND
                       </td>
                     </tr>
                   ))}
                   <tr>
                     <td></td>
                     <td></td>
-                    <td>${total}</td>
+                    <td>{convertUSDtoVND(total)} VND</td>
                   </tr>
                 </tbody>
               </Table>
@@ -195,10 +209,10 @@ export default function CartPage() {
           </Box>
           {!!cartProducts?.length && (
             <Box>
-              <h2>Order information</h2>
+              <h2 className="font-bold py-3 text-xl">Thông tin đặt hàng</h2>
               <Input
                 type="text"
-                placeholder="Name"
+                placeholder="Họ và tên "
                 value={name}
                 name="name"
                 onChange={(ev) => setName(ev.target.value)}
@@ -213,7 +227,7 @@ export default function CartPage() {
               <CityHolder>
                 <Input
                   type="text"
-                  placeholder="City"
+                  placeholder="Tỉnh/Thành phố"
                   value={city}
                   name="city"
                   onChange={(ev) => setCity(ev.target.value)}
@@ -221,20 +235,20 @@ export default function CartPage() {
               </CityHolder>
               <Input
                 type="text"
-                placeholder="Street Address"
+                placeholder="Địa chỉ"
                 value={streetAddress}
                 name="streetAddress"
                 onChange={(ev) => setStreetAddress(ev.target.value)}
               />
               <Input
                 type="text"
-                placeholder="Country"
+                placeholder="Số điện thoại"
                 value={country}
                 name="country"
                 onChange={(ev) => setCountry(ev.target.value)}
               />
               <Button black block onClick={goToPayment}>
-                Continue to payment
+                Tiếp tục thanh toán
               </Button>
             </Box>
           )}

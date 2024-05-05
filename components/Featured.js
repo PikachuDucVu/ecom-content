@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
 import Center from "@/components/Center";
 import styled from "styled-components";
@@ -6,6 +7,7 @@ import ButtonLink from "@/components/ButtonLink";
 import CartIcon from "@/components/icons/CartIcon";
 import { useContext } from "react";
 import { CartContext } from "@/components/CartContext";
+import { convertUSDtoVND, fakeSales, randomInt } from "@/lib/utils";
 
 const Bg = styled.div`
   background-color: #222;
@@ -19,10 +21,15 @@ const Title = styled.h1`
   @media screen and (min-width: 768px) {
     font-size: 3rem;
   }
+  width: 85%;
 `;
 const Desc = styled.p`
   color: #aaa;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  margin: 10px 0;
+  @media screen and (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -70,7 +77,6 @@ export default function Featured({ product }) {
     addProduct(product._id);
   }
 
-  console.log(product);
   return (
     <Bg>
       <Center>
@@ -85,20 +91,29 @@ export default function Featured({ product }) {
                   outline={1}
                   white={1}
                 >
-                  Read more
+                  Thông tin sản phẩm
                 </ButtonLink>
                 <Button white onClick={addFeaturedToCart}>
                   <CartIcon />
-                  Add to cart
+                  Thêm vào giỏ hàng
                 </Button>
               </ButtonsWrapper>
             </div>
           </Column>
           <Column>
-            <img
-              src="https://ducvu-ecommerce.s3.ap-southeast-2.amazonaws.com/1714690174159.png"
-              alt=""
-            />
+            <div className="flex flex-col gap-10">
+              <img
+                src="https://ducvu-ecommerce.s3.ap-southeast-2.amazonaws.com/1714690174159.png"
+                alt=""
+                className="scale-125 hover:scale-150 transition-transform duration-300 ease-in-out"
+              />
+              <div className="w-full text-center text-xl line-through">
+                Giá gốc: {fakeSales(product?.price || 0, 10)} VND
+              </div>
+              <div className="w-full text-center -mt-7 font-bold text-xl">
+                Giá ưu đãi: {convertUSDtoVND(product?.price)} VND
+              </div>
+            </div>
           </Column>
         </ColumnsWrapper>
       </Center>
