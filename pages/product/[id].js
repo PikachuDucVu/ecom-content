@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import CartIcon from "@/components/icons/CartIcon";
 import { useContext } from "react";
 import { CartContext } from "@/components/CartContext";
+import { convertUSDtoVND, fakeSales } from "@/lib/utils";
 
 const ColWrapper = styled.div`
   display: grid;
@@ -42,17 +43,27 @@ export default function ProductPage({ product }) {
           <div>
             <Title>{product.title}</Title>
             <p>{product.description}</p>
+            <Price>
+              <span className="font-bold">Giá gốc</span>:{" "}
+              <span className=" line-through">
+                {" "}
+                {fakeSales(product.price, 20)} VND{" "}
+              </span>
+            </Price>
             <PriceRow>
               <div>
-                <Price>{Number(product.price * 25000)} VND</Price>
-              </div>
-              <div>
-                <Button primary onClick={() => addProduct(product._id)}>
-                  <CartIcon />
-                  Thêm vào giỏ hàng
-                </Button>
+                <Price>
+                  <span className="font-bold">Giá chỉ còn</span>:{" "}
+                  <span className="text-red-500">
+                    (-20%) {convertUSDtoVND(product.price)} VND
+                  </span>
+                </Price>
               </div>
             </PriceRow>
+            <Button primary onClick={() => addProduct(product._id)}>
+              <CartIcon />
+              Thêm vào giỏ hàng
+            </Button>
           </div>
         </ColWrapper>
       </Center>

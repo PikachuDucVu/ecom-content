@@ -17,7 +17,11 @@ const SearchingItem = ({ products, id }) => {
           Bạn đang tìm từ khóa:
           <span className="font-normal"> {id}</span>
         </Title>
-        <ProductsGrid products={products} />
+        {products.length > 0 ? (
+          <ProductsGrid products={products} />
+        ) : (
+          <p>Không tìm thấy sản phẩm nào</p>
+        )}
       </Center>
     </div>
   );
