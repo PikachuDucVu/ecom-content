@@ -11,6 +11,9 @@ import CartIcon from "@/components/icons/CartIcon";
 import { useContext } from "react";
 import { CartContext } from "@/components/CartContext";
 import { convertUSDtoVND, fakeSales } from "@/lib/utils";
+import NewsLetter from "@/components/NewsLetter";
+import Feature from "@/components/Feature";
+import Footer from "@/components/Footer";
 
 const ColWrapper = styled.div`
   display: grid;
@@ -67,6 +70,12 @@ export default function ProductPage({ product }) {
           </div>
         </ColWrapper>
       </Center>
+      <div className="absolute w-full bottom-0">
+        <div className="flex w-full justify-center ">
+          <Feature />.
+        </div>
+        <Footer />
+      </div>
     </>
   );
 }

@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes rainbowText {
+  0% {
+    color: green;
+  }
+  25% {
+    color: blue;
+  }
+  50% {
+    color: yellow;
+  }
+  100% {
+    color: red;
+  }
+}
+
+.rainbowText {
+  animation: rainbowText 0.5s linear infinite;
+}

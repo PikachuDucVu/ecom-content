@@ -5,6 +5,9 @@ import Header from "@/components/Header";
 import ProductsGrid from "@/components/ProductsGrid";
 import Title from "@/components/Title";
 import Center from "@/components/Center";
+import NewsLetter from "@/components/NewsLetter";
+import Feature from "@/components/Feature";
+import Footer from "@/components/Footer";
 
 const SearchingItem = ({ products, id }) => {
   console.log(products);
@@ -23,6 +26,22 @@ const SearchingItem = ({ products, id }) => {
           <p>Không tìm thấy sản phẩm nào</p>
         )}
       </Center>
+      {products.length > 0 ? (
+        <div className="w-full mt-[20vh]">
+          <div className="flex w-full justify-center ">
+            <Feature />.
+          </div>
+          <Footer />
+        </div>
+      ) : (
+        <div className="absolute bottom-0 w-full">
+          <NewsLetter />
+          <div className="flex w-full justify-center ">
+            <Feature />.
+          </div>
+          <Footer />
+        </div>
+      )}
     </div>
   );
 };

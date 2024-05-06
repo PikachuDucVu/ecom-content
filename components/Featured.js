@@ -84,7 +84,7 @@ export default function Featured({ product }) {
           <Column>
             <div>
               <Title>{product.title}</Title>
-              <Desc>{truncateString(product.description, 32, "...")}</Desc>
+              <Desc>{truncateString(product.description, 256, "...")}</Desc>
               <ButtonsWrapper>
                 <ButtonLink
                   href={"/product/" + product._id}
@@ -101,16 +101,16 @@ export default function Featured({ product }) {
             </div>
           </Column>
           <Column>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 mt-14">
               <img
                 src="https://ducvu-ecommerce.s3.ap-southeast-2.amazonaws.com/1714690174159.png"
                 alt=""
                 className="scale-125 hover:scale-150 transition-transform duration-300 ease-in-out"
               />
-              <div className="w-full text-center text-xl line-through">
+              <div className="w-full text-center text-xl line-through text-slate-500 mt-10">
                 Giá gốc: {fakeSales(product?.price || 0, 10)} VND
               </div>
-              <div className="w-full text-center -mt-7 font-bold text-xl">
+              <div className="w-full text-center -mt-7 font-bold text-xl rainbowText">
                 Giá ưu đãi: {convertUSDtoVND(product?.price)} VND
               </div>
             </div>

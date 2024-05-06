@@ -5,6 +5,9 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
 import ProductsGrid from "@/components/ProductsGrid";
 import Title from "@/components/Title";
+import Feature from "@/components/Feature";
+import Footer from "@/components/Footer";
+import NewsLetter from "@/components/NewsLetter";
 
 export default function ProductsPage({ products }) {
   return (
@@ -14,6 +17,13 @@ export default function ProductsPage({ products }) {
         <Title>Tất cả sản phẩm</Title>
         <ProductsGrid products={products} />
       </Center>
+      <div className="w-full mt-[5vh]">
+        <NewsLetter />
+        <div className="flex w-full justify-center ">
+          <Feature />.
+        </div>
+        <Footer />
+      </div>
     </>
   );
 }
