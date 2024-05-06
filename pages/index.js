@@ -17,8 +17,8 @@ export default function HomePage({ featuredProduct, newProducts, categories }) {
   return (
     <div className={`${showSponsorPopup ? "overflow-y-visible" : ""}`}>
       {showSponsorPopup && <SponsorPopup closeModal={setShowSponsorPopup} />}
-      <Header />
-      <Featured product={featuredProduct} />
+      <Header showSponsorPopup={showSponsorPopup} />
+      <Featured product={featuredProduct} showSponsorPopup={showSponsorPopup} />
       <div className="flex w-full justify-center p-5 ">
         <Category categories={categories} />
       </div>

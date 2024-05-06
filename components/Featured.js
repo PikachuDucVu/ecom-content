@@ -71,7 +71,7 @@ function truncateString(str, length, ending = "...") {
   return str;
 }
 
-export default function Featured({ product }) {
+export default function Featured({ product, showSponsorPopup }) {
   const { addProduct } = useContext(CartContext);
   function addFeaturedToCart() {
     addProduct(product._id);
@@ -101,12 +101,15 @@ export default function Featured({ product }) {
             </div>
           </Column>
           <Column>
-            <div className="flex flex-col gap-10 mt-14">
-              <img
-                src="https://ducvu-ecommerce.s3.ap-southeast-2.amazonaws.com/1714690174159.png"
-                alt=""
-                className="scale-125 hover:scale-150 transition-transform duration-300 ease-in-out"
-              />
+            <div className="flex flex-col gap-10 mt-14 ml-10">
+              {!showSponsorPopup && (
+                <img
+                  src="https://ducvu-ecommerce.s3.ap-southeast-2.amazonaws.com/1714690174159.png"
+                  alt={product.title}
+                  className="scale-125 hover:scale-150 transition-transform duration-300 ease-in-out "
+                />
+              )}
+
               <div className="w-full text-center text-xl line-through text-slate-500 mt-10">
                 Giá gốc: {fakeSales(product?.price || 0, 10)} VND
               </div>
