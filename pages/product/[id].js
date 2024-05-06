@@ -70,7 +70,7 @@ export default function ProductPage({ product }) {
           </div>
         </ColWrapper>
       </Center>
-      <div className="absolute w-full bottom-0">
+      <div className=" w-full ">
         <div className="flex w-full justify-center ">
           <Feature />.
         </div>
