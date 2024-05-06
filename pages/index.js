@@ -12,7 +12,7 @@ import Feature from "@/components/Feature";
 import NewsLetter from "@/components/NewsLetter";
 
 export default function HomePage({ featuredProduct, newProducts, categories }) {
-  const [showSponsorPopup, setShowSponsorPopup] = useState(false);
+  const [showSponsorPopup, setShowSponsorPopup] = useState(true);
 
   return (
     <div className={`${showSponsorPopup ? "overflow-y-visible" : ""}`}>
