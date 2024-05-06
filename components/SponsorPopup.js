@@ -15,7 +15,10 @@ const SponsorPopup = ({ closeModal }) => {
     return () => clearInterval(interval);
   }, [current]);
   return (
-    <div className="absolute  w-full h-full flex justify-center items-center bg-black bg-opacity-75">
+    <div
+      className="absolute w-full h-full flex justify-center items-center bg-black bg-opacity-75"
+      onClick={() => closeModal(false)}
+    >
       <div className="flex justify-center items-center w-full h-full opacity-100 text-white ">
         <div className="lg:w-4/5 w-full h-full max-w-[1400px] max-h-[700px] m-auto p-2 relative group ">
           <div
